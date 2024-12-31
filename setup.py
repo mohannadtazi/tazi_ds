@@ -5,8 +5,8 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 setup(
-    name='tazi_ds',  # Name of your library
-    version='1.0.0',
+    name='tazids',  # Name of your library
+    version='1.0.1',
     description='A simple linear regression library',
     author='TAZI Mohannad',
     author_email='mohannadtazi.dev@gmail.com',
