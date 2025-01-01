@@ -1,0 +1,10 @@
+README.md
+setup.py
+tazids/__init__.py
+tazids/regressor.py
+tazids/tree.py
+tazids.egg-info/PKG-INFO
+tazids.egg-info/SOURCES.txt
+tazids.egg-info/dependency_links.txt
+tazids.egg-info/requires.txt
+tazids.egg-info/top_level.txt
