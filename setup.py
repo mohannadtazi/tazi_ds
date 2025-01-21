@@ -6,8 +6,8 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='tazids',  
-    version='1.1.1',  
-    description='A simple machine learning library',
+    version='1.2.0',  
+    description='A simple machine learning library for educational purposes.',
     author='TAZI Mohannad',
     author_email='mohannadtazi.dev@gmail.com',
     url='https://github.com/mohannadtazi/tazi_ds',

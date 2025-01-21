@@ -1,6 +1,7 @@
 README.md
 setup.py
 tazids/__init__.py
+tazids/clustering.py
 tazids/regressor.py
 tazids/tree.py
 tazids.egg-info/PKG-INFO

@@ -1,7 +1,7 @@
 Metadata-Version: 2.1
 Name: tazids
-Version: 1.1.1
-Summary: A simple machine learning library
+Version: 1.2.0
+Summary: A simple machine learning library for educational purposes.
 Home-page: https://github.com/mohannadtazi/tazi_ds
 Author: TAZI Mohannad
 Author-email: mohannadtazi.dev@gmail.com
@@ -16,7 +16,7 @@ Requires-Dist: numpy
 # Tazids Library Documentation
 
 ## Overview
-Tazids is a simple yet powerful machine learning library that provides implementations for various algorithms, including Linear Regression and Decision Trees. The library is designed to help you easily build and train models for regression and classification tasks, with a focus on transparency and simplicity.
+Tazids is a simple yet powerful machine learning library that provides implementations for various algorithms, including Linear Regression, Decision Trees, and K-Means clustering. The library is designed to help you easily build, train, and apply machine learning models for a variety of tasks, with a focus on transparency and simplicity.
 
 ## Installation
 To install the Tazids library, you can use the following command:
@@ -32,144 +32,48 @@ Tazi_Ds/
 â”‚   â”œâ”€â”€ __init__.py        # Initialization file for the tazids module
 â”‚   â”œâ”€â”€ regressor.py       # Contains the LinearRegression class
 â”‚   â”œâ”€â”€ tree.py            # Contains the DecisionTree class
+â”‚   â”œâ”€â”€ clustering.py      # Contains the KMeans class
 â””â”€â”€ setup.py               # Setup script for installation
 ```
 
-## `Linear Regression` Class (LinearRegression)
-The **LinearRegression** class implements a simple linear regression model using gradient descent. It allows you to fit a model to data, compute predictions, and monitor the learning process.
+## Features  
+### `Linear Regression` Class (LinearRegression)
+The **LinearRegression** class implements a simple linear regression model using gradient descent. It allows you to:  
+- Train the model on data using gradient descent.  
+- Predict outcomes for new data.  
+- Monitor the training process with loss values.  
 
-### Constructor: `__init__(self)`
-The constructor initializes the model's parameters.
-```python
-class LinearRegression:
-    def __init__(self):
-        self.parameters = {}
-```
-
-### Method: `fw_prop(self, X)`
-Performs forward propagation to predict the target variable using the model's parameters (slope `a` and intercept `b`).
-```python
-    def fw_prop(self, X):
-        a = self.parameters['a']
-        b = self.parameters['b']
-        y_pred = a * X + b
-        return y_pred
-```
-
-### Method: `cost_function(self, y, y_pred)`
-Calculates the cost using the Mean Squared Error (MSE) formula.
-```python
-    def cost_function(self, y, y_pred):
-        cost = np.mean((y_pred - y) ** 2)
-        return cost
-```
-
-### Method: `back_prop(self, X, y, y_pred)`
-Computes the gradients (derivatives) of the cost function with respect to the parameters.
-```python
-    def back_prop(self, X, y, y_pred):
-        derivatives = {}
-        df = y_pred - y
-        derivatives['da'] = 2 * np.mean(X * df)
-        derivatives['db'] = 2 * np.mean(df)
-        return derivatives
-```
-
-### Method: `update_params(self, derivatives, learning_rate)`
-Updates the model parameters using the gradients computed during the backpropagation.
-```python
-    def update_params(self, derivatives, learning_rate):
-        self.parameters['a'] -= learning_rate * derivatives['da']
-        self.parameters['b'] -= learning_rate * derivatives['db']
-```
-
-### Method: `fit(self, X, y, learning_rate=0.1, iters=1000)`
-Trains the linear regression model using gradient descent.
-```python
-    def fit(self, X, y, learning_rate=0.1, iters=1000):
-        self.parameters['a'] = np.random.uniform(-1, 1)
-        self.parameters['b'] = np.random.uniform(-1, 1)
-        self.loss = []
-        for i in range(iters):
-            predictions = self.fw_prop(X)
-            cost = self.cost_function(y, predictions)
-            derivatives = self.back_prop(X, y, predictions)
-            self.update_params(derivatives, learning_rate)
-            self.loss.append(cost)
-            if i % 100 == 0:
-                print(f"Iteration = {i}, Loss = {cost}")
-```
-
-### Method: `predict(self, X)`
-Makes predictions using the trained parameters.
-```python
-    def predict(self, X):
-        a = self.parameters['a']
-        b = self.parameters['b']
-        y_pred = a * X + b
-        return y_pred
-```
-
-### Example Usage
+#### Example Usage
 ```python
 import numpy as np
 from tazids.regressor import LinearRegression
 
 # Generate synthetic data
-np.random.seed(42)
-X = np.random.rand(100, 1) * 10  # Random features between 0 and 10
-y = np.random.rand(100) * 100    # Random target variable between 0 and 100
+X = np.random.rand(100, 1) * 10
+y = 5 * X + np.random.randn(100, 1) * 2  # Linear relationship with noise
 
 # Initialize and train the model
 model = LinearRegression()
-model.fit(X, y, learning_rate=0.001, iters=1000)
+model.fit(X, y, learning_rate=0.01, iters=1000)
 
 # Make predictions
 predictions = model.predict(X)
 ```
 
-## `Decision Tree` Class (DecisionTree)
-The **DecisionTree** class implements a simple decision tree algorithm for classification tasks. It builds a tree based on the input features and predicts the class of a given input.
+### `Decision Tree` Class (DecisionTree)
+The **DecisionTree** class implements a simple decision tree for classification tasks. It supports:  
+- Recursive splitting of the data to build the decision tree.  
+- Making predictions by traversing the tree for each input sample.  
 
-### Constructor: `__init__(self)`
-Initializes the decision tree parameters.
-```python
-class DecisionTree:
-    def __init__(self):
-        self.tree = None
-```
+#### Example Usage  
 
-### Method: `fit(self, X, y)`
-Builds the decision tree by recursively splitting the dataset at the best feature and threshold.
-```python
-    def fit(self, X, y):
-        self.tree = self._build_tree(X, y)
-```
-
-### Method: `_build_tree(self, X, y)`
-Recursively builds the tree by finding the best feature to split the data at each node.
-```python
-    def _build_tree(self, X, y):
-        # Recursive function to build the decision tree
-        pass
-```
-
-### Method: `predict(self, X)`
-Makes predictions by traversing the decision tree for each input sample.
-```python
-    def predict(self, X):
-        return np.array([self._traverse_tree(x, self.tree) for x in X])
-```
-
-### Example Usage
 ```python
 from tazids.tree import DecisionTree
 from sklearn.datasets import load_iris
 
 # Load dataset
 data = load_iris()
-X = data.data
-y = data.target
+X, y = data.data, data.target
 
 # Initialize and train the model
 model = DecisionTree()
@@ -179,9 +83,41 @@ model.fit(X, y)
 predictions = model.predict(X)
 ```
 
+### `KMeans` Class (KMeans)
+The KMeans class implements the K-Means clustering algorithm for unsupervised learning. It clusters data points into k groups by:  
+
+- Initializing random centroids.  
+- Assigning points to the nearest centroid.  
+- Updating centroids iteratively until convergence.  
+### Example Usage
+```python
+from tazids.clustering import KMeans
+from sklearn.datasets import make_blobs
+import matplotlib.pyplot as plt
+
+# Generate synthetic data
+X, _ = make_blobs(n_samples=300, centers=4, cluster_std=0.6, random_state=42)
+
+# Initialize and train the KMeans model
+model = KMeans(n_iter=300, tol=1e-4)
+model.fit(X, k=4)
+
+# Predict cluster labels
+predictions = model.predict(X)
+
+# Visualize the results
+plt.scatter(X[:, 0], X[:, 1], c=predictions, cmap='viridis', s=30)
+plt.scatter(model.centroids[:, 0], model.centroids[:, 1], c='red', marker='x', s=200, label='Centroids')
+plt.legend()
+plt.title("KMeans Clustering")
+plt.show()
+```
+
 ## Notes
 - Tazids is designed to be simple and transparent for educational and research purposes.
-- Both the `LinearRegression` and `DecisionTree` models are built from scratch, showcasing the basic principles behind these algorithms.
-- For more complex use cases, consider using established libraries like scikit-learn, but Tazids is a great way to learn how these models work under the hood.
+- Transparency: All models are built from scratch to provide a better understanding of their inner workings.
+- Learning-Oriented: Ideal for students and researchers who want to explore the basics of machine learning.
+- Lightweight: Minimal dependencies to keep the library easy to use.
+- For advanced use cases, consider established libraries like scikit-learn, but Tazids offers a perfect entry point to learn the fundamentals.
 
 # Made By [Mohannad Tazi](https://www.linkedin.com/in/mohannad-tazi/) 
