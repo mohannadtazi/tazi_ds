@@ -5,7 +5,8 @@
 ![Python](https://img.shields.io/pypi/pyversions/tazids)
 ![Downloads](https://img.shields.io/pypi/dm/tazids)
 
-![image](https://github.com/user-attachments/assets/cfc285b8-8d66-4bd9-9265-f875eb8ea9bf)
+![logo-TAZIDS](https://github.com/user-attachments/assets/911cc5cb-efb7-4082-a2dc-3c1b906eb3e8)
+
 
 ## Overview
 Tazids is a simple yet powerful machine learning library that provides implementations for various algorithms, including Linear Regression, Decision Trees, and K-Means clustering. The library is designed to help you easily build, train, and apply machine learning models for a variety of tasks, with a focus on transparency and simplicity.
